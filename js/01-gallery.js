@@ -14,38 +14,41 @@ import { galleryItems } from './gallery-items.js';
 
 let gallery = document.querySelector("div.gallery");
 const createGallery = galleryItems
-  .map(galleryItem => `<div class="gallery__item">
-  <a class="gallery__link" href=${galleryItem.original}>
-  <img class="gallery__image" src=${galleryItem.preview} alt=${galleryItem.description} data-source=${galleryItem.original} height="200">
+  .map(({ preview, original, description }) => `<div class="gallery__item">
+  <a class="gallery__link" href=${original}>
+  <img class="gallery__image" src=${preview} alt=${description} data-source=${original} height="200">
   </a>
   </div>`)
   .join("");
 
 gallery.insertAdjacentHTML("afterbegin", createGallery);
- 
-// lecimy dalej // 
 
 gallery.addEventListener("click", selectPict);
 
 function selectPict(event) {
-  event.preventDefault(); // chyba tu?
+  event.preventDefault(); 
   if (event.target.nodeName !== "IMG") {
     return;
   }
 
-  console.log("event.target", event.target); // cały tag img kliknietego zdjecia
-  console.log("event.target.nodeName", event.target.nodeName); // IMG z duzych liter
-
+  // console.log("event.target", event.target); // cały tag img kliknietego zdjecia
+  // console.log("event.target.nodeName", event.target.nodeName); // IMG z duzych liter
+  
   galleryItems.forEach((item) => {
-    // document.querySelector('.gallery__image').onclick = () => {
-    const modalWindow = basicLightbox.create(`<img src=${item.original}>`)
-    if (event.target.src === item.preview) {
-      modalWindow.show();
-    }
-    // }
+      const modalWindow = basicLightbox.create(`<img src=${item.original}>`)
+      if (event.target.src === item.preview) {
+        modalWindow.show();
+      }
+      if (modalWindow.visible() === true) {
+        document.addEventListener("keydown", function (event) {
+            // console.log("event.key", event.key); // Escape
+            if (event.key === "Escape") {
+              modalWindow.close();
+            }
+          });
+        }
   });
 }
-
 
 
 
