@@ -50,7 +50,7 @@ function selectPict(event) {
   });
 }
 
-
+// galleryItem.innerHTML += `<a class="gallery__link" href=${item.original}></a>` // przyklad od Mikołaja
 
 // potrzebujemy 1 event listener ustawiony na div.gallery, ktory ma zebrac wsztstkie te items.i wtedy event target pozwoli nam wiedziec na ktory obraz kliknelismy - patrz konspekt kolorki(targetem zawsze bedzie img bo on zawsze wybierze ten na koncu.trzeba uzyc Img.dataset.source.a reszta juz bedzie kwestia zmiany atrybutu src przed otworzeniem)
 // to wszystko zrobi za nas lightbox, tylko musimy mu dac odpowiednie dane
@@ -92,8 +92,8 @@ function selectPict(event) {
 
 
 
-// ********przyklad z basiclightbox i img - codepen*****
-// document.querySelector('button.image').onclick = () => {      // nie mogl byc ten doc query selector..
+// ********przyklad z basiclightbox i img - codepen https://codepen.io/electerious/pen/rLBvGz?editors=0010 bez tworzenia zmiennej*****
+// document.querySelector('button.image').onclick = () => {      // nie mogl byc ten doc.query.selector u mnie..
 
 // 	basicLightbox.create(`
 // 		<img width="1400" height="900" src="https://placehold.it/1400x900">
