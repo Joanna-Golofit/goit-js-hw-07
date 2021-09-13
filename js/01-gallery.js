@@ -13,53 +13,40 @@ import { galleryItems } from './gallery-items.js';
 // console.log(galleryItems);
 
 let gallery = document.querySelector("div.gallery");
-const markup = galleryItems
+const createGallery = galleryItems
   .map(galleryItem => `<div class="gallery__item">
-  <a class="gallery__link" target="_blank" href=${galleryItem.original}>
+  <a class="gallery__link" href=${galleryItem.original}>
   <img class="gallery__image" src=${galleryItem.preview} alt=${galleryItem.description} data-source=${galleryItem.original} height="200">
   </a>
   </div>`)
   .join("");
 
-gallery.insertAdjacentHTML("afterbegin", markup);
+gallery.insertAdjacentHTML("afterbegin", createGallery);
  
 // lecimy dalej // 
 
 gallery.addEventListener("click", selectPict);
 
 function selectPict(event) {
-  if (event.target.nodeName !== "img") {
+  event.preventDefault(); // chyba tu?
+  if (event.target.nodeName !== "IMG") {
     return;
   }
 
-  console.log(event.target);
+  console.log("event.target", event.target); // cały tag img kliknietego zdjecia
+  console.log("event.target.nodeName", event.target.nodeName); // IMG z duzych liter
 
-  galleryItems.forEach((galleryItem) => {
-    document.querySelector('.gallery__image').onclick = () => {
-      basicLightbox.create(`
-      <img src=${galleryItem.original}>
-    `).show()
+  galleryItems.forEach((item) => {
+    // document.querySelector('.gallery__image').onclick = () => {
+    const modalWindow = basicLightbox.create(`<img src=${item.original}>`)
+    if (event.target.src === item.preview) {
+      modalWindow.show();
     }
+    // }
   });
 }
-// ********przyklad z basiclightbox i img - codepen*****
-// document.querySelector('button.image').onclick = () => {
-
-// 	basicLightbox.create(`
-// 		<img width="1400" height="900" src="https://placehold.it/1400x900">
-// 	`).show()
-// }
 
 
-// moje proby
-// galleryItems.forEach((galleryItem) => {
-//   document.querySelector('.gallery__image').onclick = () => {
-//     basicLightbox.create(`
-// 		<img src=${galleryItem.original}>
-// 	`).show()
-//   }
-// }
-// ********przyklad z basiclightbox i img  END *****
 
 
 // potrzebujemy 1 event listener ustawiony na div.gallery, ktory ma zebrac wsztstkie te items.i wtedy event target pozwoli nam wiedziec na ktory obraz kliknelismy - patrz konspekt kolorki(targetem zawsze bedzie img bo on zawsze wybierze ten na koncu.trzeba uzyc Img.dataset.source.a reszta juz bedzie kwestia zmiany atrybutu src przed otworzeniem)
@@ -85,11 +72,30 @@ function selectPict(event) {
 
 // Dodaj zamknięcie okna modalnego po naciśnięciu klawiszy Escape. Zrób tak, aby nasłuchiwanie klawiatury było aktywne tylko wtedy, gdy otwarte jest okno modalne. W bibliotece basicLightbox istnieje metoda na programowe zamknięcie okna modalnego.
 
-// ======================ul i li nie
 
-// const markup = galleryItems
-//   .map(galleryItem => `<li class="gallery__item"><a class="gallery__link" href=${galleryItem.original}> <img class="gallery__image" src=${galleryItem.preview} alt=${galleryItem.description} height="200"></a></li>`)
-//   .join("");
 
-// gallery.insertAdjacentHTML("afterbegin", `<ul> ${markup} </ul>`);
-// ======================ul i li nie - end
+
+// ============= prevent default z konspektu
+
+// form.addEventListener("submit", (event) => {
+//   event.preventDefault();
+//   const {
+//     elements: { username, password }
+//   } = event.currentTarget;
+//   console.log(username.value, password.value);
+// });
+// ============= prevent default END
+
+
+
+
+// ********przyklad z basiclightbox i img - codepen*****
+// document.querySelector('button.image').onclick = () => {      // nie mogl byc ten doc query selector..
+
+// 	basicLightbox.create(`
+// 		<img width="1400" height="900" src="https://placehold.it/1400x900">
+// 	`).show()
+// }
+
+
+// ********przyklad z basiclightbox i img  END *****
