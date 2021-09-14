@@ -12,7 +12,7 @@ import { galleryItems } from './gallery-items.js';
 
 // console.log(galleryItems);
 
-let gallery = document.querySelector("div.gallery");
+const gallery = document.querySelector("div.gallery");
 const createGallery = galleryItems
   .map(({ preview, original, description }) => `<div class="gallery__item">
   <a class="gallery__link" href=${original}>
